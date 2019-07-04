@@ -2,7 +2,7 @@
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 define('DB_SERVER', 'localhost');
-define('DB_USER', 'root1');
+define('DB_USER', 'root');
 define('DB_PASSWORD', '');
 define('DB_NAME', 'todolist');
 
@@ -38,16 +38,45 @@ class Database{
   
         return $this->conn;
     }
+
+    public function getClose()
+    {
+        if (isset($this->conn)){
+            $this->conn->close();
+        }
+    }
+
+    public function delete($id){
+        try{
+            $sql = "UPDATE task SET status = '0' where taskID =" . $id;
+            $result = $this->conn->query($sql);
+        }catch (mysqli_sql_exception $exception){
+            die ("We could not handle your requst <br> Consult your administrator");
+        }
+        
+        return $result;
+    }
+
+    public function find_all($status){
+        $sql = "SELECT * from task where status = '". $status ."'";
+        $result = $this->conn->query($sql);
+
+        return $result;
+    }
+
+    public function find_by_id($id){
+        $sql = "SELECT * from task where taskID =" . $id;
+        return $this->conn->query($sql);
+
+    }
 }
 
 
-$obj = new database;
+$obj = new database();
 
 if ($obj->errormsg != "") {
-    echo 'Contact your DBA for the databse eror';
-}else{
-    echo 'success';
-} 
+    echo $obj->errormsg;
+}
 
 // if ($obj->errormsg == ""){
 //     echo "Contact your administrator about the database connection error";

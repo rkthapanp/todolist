@@ -1,29 +1,31 @@
 <?php
-    $db_server = 'localhost';
-    $db_user = 'root';
-    $db_password = '';
-    $db_table = 'todolist';
+    // $db_server = 'localhost';
+    // $db_user = 'root';
+    // $db_password = '';
+    // $db_table = 'todolist';
 
-    //creating connection
-    //when using serverm,user and passwrod value even if user is incorrect it does not triger error
-    //when using four argument it will triger error but gives warning message as well with our errro message
-    $conn = new mysqli($db_server, $db_user, $db_password,$db_table);
+    // //creating connection
+    // //when using serverm,user and passwrod value even if user is incorrect it does not triger error
+    // //when using four argument it will triger error but gives warning message as well with our errro message
+    // $conn = new mysqli($db_server, $db_user, $db_password,$db_table);
 
-    //check connection
-    if ($conn->connect_error){
-        die("Connection failed " . $conn->connect_error);
-    }
+    // //check connection
+    // if ($conn->connect_error){
+    //     die("Connection failed " . $conn->connect_error);
+    // }
 
-    $sql = "SELECT * from task where status = '0'";
-    $result = $conn->query($sql);
+    // $sql = "SELECT * from task where status = '0'";
+    // $result = $conn->query($sql);
 
-    //checking error in query
-    if (!$result){
-        die ("your query is error");
-    }
+    // //checking error in query
+    // if (!$result){
+    //     die ("your query is error");
+    // }
 
-    $conn->close();
-    //print_r($result->fetch_assoc());
+    // $conn->close();
+    // //print_r($result->fetch_assoc());
+    require_once('class/database.class.php');
+    $result = $obj->find_all('0');
 ?>
 
 <table class="table table-hover">
